@@ -1,0 +1,30 @@
+title: '机械战警',
+doctor:'何塞.帕迪利亚',
+year:2014,
+country:'美国',
+language:'英语',
+poster: 'http://tu1.xiamp4.com/20140210202546153.jpg',
+flash: 'http://player.youku.com/player.php/sid/XNJA1Njc0NTUy/v.swf',
+summary:'Yes , you know what , i am the Summary for this!!'
+
+movies:[{
+    _id:1,
+    title: '机械战警',
+    doctor:'何塞.帕迪利亚',
+    year:2014,
+    country:'美国',
+    language:'英语',
+    poster: 'http://tu1.xiamp4.com/20140210202546153.jpg',
+    flash: 'http://player.youku.com/player.php/sid/XNJA1Njc0NTUy/v.swf',
+    summary:'我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述'
+},{
+    _id:1,
+    title: '机械战警',
+    doctor:'何塞.帕迪利亚',
+    year:2014,
+    country:'美国',
+    language:'英语',
+    poster: 'http://tu1.xiamp4.com/20140210202546153.jpg',
+    flash: 'http://player.youku.com/player.php/sid/XNJA1Njc0NTUy/v.swf',
+    summary:'我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述我是描述'
+}]
