@@ -1,8 +1,9 @@
 var mongoose = require('mongoose');
-var MovieSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+var MovieSchema = new Schema({
 	director:String,
 	title:String,
-	language,String,
+	language:String,
 	country:String,
 	summary:String,
 	flash:String,
@@ -30,21 +31,17 @@ MovieSchema.pre('save',function(next){
 		this.meta.updateAt = Date.now();
 	}
 	
-
+	// MUST !!! USE !!! next()!
+	next();
 
 });
 // statics 
 MovieSchema.statics = {
 	fetch: function(cb){
-		return this
-			.find({})
-			.sort('meta.updateAt')
-			.exec(cb);
+		return this.find({}).sort('meta.updateAt').exec(cb);
 	},
-	findById: function(id,cb){
-		return this
-			.findOne({_id:id})
-			.exec(cb);
+	findById: function(id, cb){
+		return this.findOne({_id: id}).exec(cb);
 
 	}
 
