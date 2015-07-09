@@ -3,39 +3,39 @@ block content
   .container
     .row
       form.form-horizontal(method="post",action="/admin/moive/new")
-        //- hiden input
-        input(type="hidden",name="movie[_id]",value="movie{_id}")
+        //- hiden input???
+        input(type="hidden",name="movie[_id]",value="#{movie._id}")
         .form-group
           label.col-sm-2.control-label(for="title") 电影名字
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{title}")
+            input#title.form-control(type="text",name="movie[title]",value="#{movie.title}")
         .form-group
           label.col-sm-2.control-label(for="director") 导演
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{director}")
+            input#title.form-control(type="text",name="movie[director]",value="#{movie.director}")
         .form-group
           label.col-sm-2.control-label(for="year") 上映年份
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{year}")
+            input#title.form-control(type="text",name="movie[year]",value="#{movie.year}")
         .form-group
           label.col-sm-2.control-label(for="title") 国家
           div.col-sm-10
-            input#title.form-control(type="country",name="movie{country}")
+            input#title.form-control(type="country",name="movie[country]",value="#{movie.country}")
         .form-group
           label.col-sm-2.control-label(for="language") 语言
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{language}")
+            input#title.form-control(type="text",name="movie[language]",value="#{movie.language}")
         .form-group
           label.col-sm-2.control-label(for="poster") 封面
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{poster}")
+            input#title.form-control(type="text",name="movie[poster]",value="#{movie.poster}")
         .form-group
           label.col-sm-2.control-label(for="flash") 视频地址
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{flash}")
+            input#title.form-control(type="text",name="movie[flash]",value="#{movie.flash}")
         .form-group
           label.col-sm-2.control-label(for="summary") 简介
           div.col-sm-10
-            input#title.form-control(type="text",name="movie{summary}")
+            input#title.form-control(type="text",name="movie[summary]",value="#{moive.summary}")
     .row.text-right
       button.btn.btn-default(type="button") 导入信息
