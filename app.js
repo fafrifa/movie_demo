@@ -44,41 +44,89 @@ console.log("server is running on: "+Config.port);
 //#######
 //-- index
 app.get('/',function(req,res){
-	
+	Movie.fetch(function(err,movies){
+		if(err){
+			console.log(err);
+		}
+		res.render('index',{
+			title:"Movie Index",
+			movies: movies
+		});
+	});
 
 });
 //-- List 
 app.get('/list',function(req,res){
-	res.render
+	Movie.fetch(function(err,movies){
+		if(err){
+			console.log(err);
+		}
+		res.render('list',{
+			title:'Movie 列表',
+			movies:movies
+		})
+
+
+	});
+
+});
+// admin list 
+app.get('/admin/list',function(req,res){
+	Movie.fetch(function(err,movies){
+		if(err){
+			console.log(err);
+		}
+		res.render('list',{
+			title:'Movie 列表',
+			movies:movies
+		})
+
+
+	});
 
 });
 
 //-- admin
 app.get('/admin/movie',function(req,res){
+	
+
 	res.render('admin',{
-		title:'movies 后台录入',
+		title:'movies 后台录入'
+		,
 		movie:{
-			director:'hihi',
-			title:'hoho',
-			language:'EN',
-			country:'CN',
-			summary:'catcat',
-			flash:'http://player.youku.com/player.php/sid/XMTI2NjA4MzU1Ng==/v.swf',
-			poster:'http://img4.duitang.com/uploads/item/201207/08/20120708234648_dwQuG.thumb.600_0.jpeg',
-			year:2010
+		// 	// director:'hihi',
+		// 	// title:'hoho',
+		// 	// language:'EN',
+		// 	// country:'CN',
+		// 	// summary:'catcat',
+		// 	// flash:'http://player.youku.com/player.php/sid/XMTI2NjA4MzU1Ng==/v.swf',
+		// 	// poster:'http://img4.duitang.com/uploads/item/201207/08/20120708234648_dwQuG.thumb.600_0.jpeg',
+		// 	// year:2010
 			
 		}
 	});
 
 });
 
-//-- admin list
-app.get('/admin/list',function(req,res){
-	
+// -- admin list
+app.get('/admin/update/:id',function(req,res){
+	var id = req.params.id;
+	console.log(id);
+	if(id){
+		Movie.findById(id,function(err,movie){
+			if(err){
+				console.log(err);
+			}
+			res.render('admin',{
+				title:'Moive 后台',
+				movie:movie
+			});
+		});
+	}
 
 });
 //-- admin post
-app.post('/admin/movie',function(req,res){
+app.post('/admin/movie/new',function(req,res){
 	//console.log(req.body.movie);
 	//bodyParser extended = true  -> is the key !!!
 	var id = req.body.movie._id;
@@ -132,7 +180,7 @@ app.get('/movie/:id',function(req,res){
 			console.log(err);
 		}
 		res.render('detail',{
-			title:'Moive' + movie.title,
+			title:'Moive ' + movie.title,
 			movie:movie
 
 		});
@@ -141,6 +189,23 @@ app.get('/movie/:id',function(req,res){
 
 });
 
+// delete movie in the list
+app.delete('/admin/list',function(req,res){
+	var id = req.query.id;
+	console.log("hahha "+id);
+	if(id){
+		Movie.remove({_id:id},function(err,movie){
+			if(err){
+				console.log(err);
+			} else {
+				res.json({success:1});
+			}
+
+		});
+
+	}
+
+})
 
 
 

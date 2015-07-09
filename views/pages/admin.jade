@@ -2,7 +2,7 @@ extends ../layout
 block content
   .container
     .row
-      form.form-horizontal(method="post",action="/admin/movie")
+      form.form-horizontal(method="post",action="/admin/movie/new")
         //- hiden input???
         if movie._id
         input(type="hidden", name="movie[_id]", value=movie._id)
