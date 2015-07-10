@@ -3,7 +3,16 @@ block content
   .container
     .row
       .col-md-7
-        embed(src="#{movie.flash}",allowFullScreen="true",quality="high",width="560",height="400",align="middle",type="application/x-shockwave-flash")
+        //- <iframe height=498 width=510  frameborder=0 allowfullscreen></iframe>
+        //- iframe(height="498px", width="510px" ,src="#{movie.flash}" ,frameborder=0 ,allowFullScreen="true")
+        //- https://www.youtube.com/watch?v=_tdF99EF1BU&list=PLC0FtARyNdQLOkHbwD7_nULNkMtn2P-td
+        //- http://www.youtube.com/v/_tdF99EF1BU
+        //- object
+        //-   param(name="move",value="#{movie.flash}")
+        //-   embed(src="#{movie.flash}",allowFullScreen="true",quality="high",width="560",height="400",align="middle",type="application/x-shockwave-flash")
+        video(controls="true",height="150",width="300",webkit-playsinline,autoplay)
+          source(src="#{movie.flash}")
+        //- embed(src="#{movie.flash}",allowFullScreen="true",quality="high",width="560",height="400",align="middle",type="application/x-shockwave-flash")
       .col-md-4
         dl.dl-horizontal
           dt 电影名字

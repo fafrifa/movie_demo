@@ -38,7 +38,7 @@ app.use(morgan('dev'));
 // listen to port 
 app.listen(Config.port);
 
-console.log("server is running on: "+Config.port);
+console.log('server is running on: '+Config.port);
 //#######
 // routes 
 //#######
@@ -49,7 +49,7 @@ app.get('/',function(req,res){
 			console.log(err);
 		}
 		res.render('index',{
-			title:"Movie Index",
+			title:'Movie Index',
 			movies: movies
 		});
 	});
@@ -91,8 +91,7 @@ app.get('/admin/movie',function(req,res){
 	
 
 	res.render('admin',{
-		title:'movies 后台录入'
-		,
+		title:'movies 后台录入',
 		movie:{
 		// 	// director:'hihi',
 		// 	// title:'hoho',
@@ -179,8 +178,9 @@ app.get('/movie/:id',function(req,res){
 		if(err){
 			console.log(err);
 		}
+		var movieTitle ='Movie '+ movie.title || "";
 		res.render('detail',{
-			title:'Moive ' + movie.title,
+			title:movieTitle,
 			movie:movie
 
 		});
@@ -192,7 +192,7 @@ app.get('/movie/:id',function(req,res){
 // delete movie in the list
 app.delete('/admin/list',function(req,res){
 	var id = req.query.id;
-	console.log("hahha "+id);
+	console.log('hahha '+id);
 	if(id){
 		Movie.remove({_id:id},function(err,movie){
 			if(err){
