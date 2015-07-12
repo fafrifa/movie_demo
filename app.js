@@ -245,9 +245,12 @@ app.post('/user/signin',function(req,res){
 	var name = _user.name;
 	var password = _user.password;
 
-	User.findOne({name:name},function(err,user){
+	User.findOne({name:name})
+		.select('name password')
+		.exec(function(err,user){
 		if(err){
 			console.log(err);
+			console.log('001');
 		}
 		if(!user){
 			return res.redirect('/');
@@ -255,6 +258,7 @@ app.post('/user/signin',function(req,res){
 		user.comparePassword(password,function(err,isMatch){
 			if(err){
 				console.log(err);
+				console.log('002');
 			}
 			if(isMatch){
 				console.log('Right Password!');
@@ -265,6 +269,14 @@ app.post('/user/signin',function(req,res){
 
 
 		});
+		// console.log(user);
+	 //    var isVaild = user.comparePassword(password);
+  //   	if(isVaild){
+  //   		console.log('Right Password!');
+  //   		return res.redirect('/');
+  //   	} else{
+  //   		console.log('Wrong Password!');
+  //   	}
 	});
 
 });

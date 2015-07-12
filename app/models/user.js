@@ -26,9 +26,9 @@ UserSchema.pre('save',function(next){
 	} else{
 		this.meta.updateAt = Date.now();
 	}
-	if(!user.isModified('password')){
-		return next();
-	}
+	// if(!user.isModified('password')){
+	// 	return next();
+	// }
 	bcrypt.hash(user.password,null,null,function(err,hash){
 		if(err){
 			return next(err);
@@ -43,17 +43,25 @@ UserSchema.pre('save',function(next){
 
 });
 // instance functions -- methods :comparePassword
-UserSchema.methods.comparePassword = function(_password,cb){
-	bcrypt.compare(_password,this.password,function(err,isMatch){
-		if(err){
-			return cb(err);
-		}
-		cb(null,isMatch);
+// 
+UserSchema.methods = {
+	comparePassword: function(_password,cb){
+		bcrypt.compare(_password, this.password, function(err,isMatch){
+			if(err){
+				return cb(err);
+			}
+			cb(null,isMatch);
 
-	});
+		});
 
+	}
 }
+// --- sync
+// UserSchema.methods.comparePassword = function(password){
+// 	user = this;
+// 	return bcrypt.compareSync(password,user.password);
 
+// };
 
 
 // statics 
