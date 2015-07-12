@@ -7,19 +7,35 @@ var Config = require('./config.js');
 var mongoose = require('mongoose');
 var morgan = require('morgan');
 var _=require('underscore');
-// movie
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+var mongoStore = require('connect-mongo')(session);
+
+// Models
 var Movie = require('./app/models/movie');
 var User = require('./app/models/user');
 
 
+
 // var Movie = mongoose.model('Movie');
 // mongo connection
-console.log(Config.dataBase);
+// console.log(Config.dataBase);
 mongoose.connect(Config.dataBase);
-
 // use body-parser to grab infor from POST
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+// session and cookie Parser
+app.use(cookieParser());
+app.use(session({
+	secret:'Moive',
+	store: new mongoStore({
+		url:Config.dataBase,
+		collection:'sessions'
+	})
+}));
+
+
+
 
 // app.locals - global
 app.locals.moment = require('moment');
@@ -47,6 +63,14 @@ console.log('server is running on: '+Config.port);
 //#######
 //-- index
 app.get('/',function(req,res){
+	console.log('Session !!!');
+	console.log(req.session.user);
+	var _user = req.session.user;
+	if(_user){
+		app.locals.user = _user;
+	}
+
+
 	Movie.fetch(function(err,movies){
 		if(err){
 			console.log(err);
@@ -225,8 +249,8 @@ app.post('/user/signup',function(req,res){
 		if(user){
 			return res.redirect('/');
 		} else{
-			var user = new User(_user);
-			user.save(function(err,user){
+			var newUser = new User(_user);
+			newUser.save(function(err,user){
 				if(err){
 					console.log(err);
 				}
@@ -261,7 +285,7 @@ app.post('/user/signin',function(req,res){
 				console.log('002');
 			}
 			if(isMatch){
-				console.log('Right Password!');
+				req.session.user = user;
 				return res.redirect('/');
 			} else{
 				console.log('Wrong Password!');
@@ -296,7 +320,14 @@ app.get('/admin/userList',function(req,res){
 	});
 });
 
+// -- logout /logout
+app.get('/logout',function(req,res){
 
+	delete req.session.user;
+	delete app.locals.user;
+	res.redirect('/');
+
+});
 
 
 
