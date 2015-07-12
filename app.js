@@ -9,6 +9,9 @@ var morgan = require('morgan');
 var _=require('underscore');
 // movie
 var Movie = require('./app/models/movie');
+var User = require('./app/models/user');
+
+
 // var Movie = mongoose.model('Movie');
 // mongo connection
 console.log(Config.dataBase);
@@ -24,7 +27,7 @@ app.locals.moment = require('moment');
 // template engine
 app.set('view engine','jade');
 // set views -> views/pages
-app.set('views','./views/pages');
+app.set('views','./views/pages'); 
 
 
 // app use : static for project 
@@ -178,7 +181,7 @@ app.get('/movie/:id',function(req,res){
 		if(err){
 			console.log(err);
 		}
-		var movieTitle ='Movie '+ movie.title || "";
+		var movieTitle ='Movie '+ movie.title || '';
 		res.render('detail',{
 			title:movieTitle,
 			movie:movie
@@ -205,7 +208,83 @@ app.delete('/admin/list',function(req,res){
 
 	}
 
+
 })
+
+// user controller route
+// --- signup
+app.post('/user/signup',function(req,res){
+	var _user = req.body.user;
+	
+
+	// see if user exist
+	User.findOne({name:_user.name},function(err,user){
+		if(err){
+			console.log(err);
+		}
+		if(user){
+			return res.redirect('/');
+		} else{
+			var user = new User(_user);
+			user.save(function(err,user){
+				if(err){
+					console.log(err);
+				}
+				// console.log(user);
+				res.redirect('/admin/userList');
+			});
+		}
+	});
+
+
+});
+
+//--- signin  /user/signin
+app.post('/user/signin',function(req,res){
+	var _user = req.body.user;
+	var name = _user.name;
+	var password = _user.password;
+
+	User.findOne({name:name},function(err,user){
+		if(err){
+			console.log(err);
+		}
+		if(!user){
+			return res.redirect('/');
+		} 
+		user.comparePassword(password,function(err,isMatch){
+			if(err){
+				console.log(err);
+			}
+			if(isMatch){
+				console.log('Right Password!');
+				return res.redirect('/');
+			} else{
+				console.log('Wrong Password!');
+			}
+
+
+		});
+	});
+
+});
+
+//-- User List 
+app.get('/admin/userList',function(req,res){
+	User.fetch(function(err,users){
+		if(err){
+			console.log(err);
+		}
+		res.render('userList',{
+			title:'User 列表',
+			users:users
+		})
+
+
+	});
+});
+
+
 
 
 
