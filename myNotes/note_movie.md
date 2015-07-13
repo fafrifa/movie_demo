@@ -8,7 +8,7 @@
 6. API 返回的是JSON ,res.json()  ,而template （jade）是直接render ，最好还是api ， 弱耦合
 7. **闭包**的应用是JS的核心！通过闭包实现内部的资源绑定，向上传递数据，通过callback的args来暴露内部的返回结果
 
-~~~
+```
 app.post('/user/signin',function(req,res){
   var _user = req.body.user;
   var name = _user.name;
@@ -47,9 +47,9 @@ UserSchema.methods.comparePassword = function(_password,cb){
   });
 
 }
-~~~
+```
 
-8. ~app.use(express.session(){sceret:’’,store:new mongoStore})~
+8. `app.use(express.session(){sceret:’’,store:new mongoStore})`
 要用到npm cookieparser，connect-mongo ，express-session
 cookieparser 要放在 session 前面 sid
 
