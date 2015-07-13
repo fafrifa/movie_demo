@@ -42,7 +42,7 @@ app.locals.moment = require('moment');
 // template engine
 app.set('view engine','jade');
 // set views -> views/pages
-app.set('views','./views/pages'); 
+app.set('views','./app/views/pages'); 
 
 
 // app use : static for project 
@@ -51,8 +51,19 @@ app.use(express.static(__dirname+'/public'));
 // app.use(express.static(path.join(__dirname,'public')));
 // morgan logger for dev
 app.use(morgan('dev'));
+
+// config APP entry file
+if('development'===app.get('env')){
+	app.set('showStackError',true);
+	app.locals.pretty = true;
+	// mongoose.set('debug',true);
+}
+
+
+
+
 // pass APP to the route !
-Route(app);
+require('./app/routes/route')(app);
 
 
 // listen to port 

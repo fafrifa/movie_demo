@@ -56,8 +56,21 @@ cookieparser 要放在 session 前面 sid
 * 把routes 单独提出并且module.exports = function(app){...};
 > *一定注意*： 先app.set ,app.use 然后再传入Route(app)
 
-
-
+### Dev 配置
+```
+if('development'===app.get('env')){
+	app.set('showStackError',true);
+	app.locals.pretty = true;
+	mongoose.set('debug',true);
+}
+```
+### User 权限控制
+* 用户的权限控制可以用number来做
+	* 0 normal | 1 verified | 2 senior | >10 admin | >50 super root
+* 如果没有登录，if(!user){return res.redirect('/signin')} , 还需要判断权限
+* 不要把用户权限的管理混在具体页面的功能实现上，用express的中间件去做。校验和判断
+> app.get('/xxx',Middleware1 , Middleware2 , pageFunction)
+* 中间件是写在Controller中的
 
 
 
