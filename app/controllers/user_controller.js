@@ -32,7 +32,7 @@ exports.signin = function(req,res){
 		var password = _user.password;
 
 		User.findOne({name:name})
-			.select('name password')
+			.select('name password role')
 			.exec(function(err,user){
 			if(err){
 				console.log(err);
@@ -102,8 +102,26 @@ exports.showSignup = function(req,res){
 
 }
 
+// user middleware
+exports.signinRequired = function(req,res,next){
+	var user = req.session.user;
+	if(!user){
+		return res.redirect('/signin');
+	}
+	next();
 
 
+
+};
+exports.adminRequired = function(req,res,next){
+	var user = req.session.user;
+	if(!user.role || user.role<=10){
+		console.log('role <= 10 please check Ur role');
+		return res.redirect('/signin');
+	}
+	next();
+
+}
 
 
 

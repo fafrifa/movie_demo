@@ -72,7 +72,10 @@ if('development'===app.get('env')){
 > app.get('/xxx',Middleware1 , Middleware2 , pageFunction)
 * 中间件是写在Controller中的
 
-
+### MongoDB
+* show dbs | show tables | use movie
+* db.collectionName.update({找},{改|$set:{新值}})
+* db.CN.findOne({"key":"value"})
 
 
 
