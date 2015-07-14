@@ -76,11 +76,39 @@ if('development'===app.get('env')){
 * show dbs | show tables | use movie
 * db.collectionName.update({找},{改|$set:{新值}})
 * db.CN.findOne({"key":"value"})
+* Mongoose的 **populate** 实现不同Schema的引用 ，因为没有joint
+> populate : path select match model options
+> 引用类型 objectId Number String Buffer 
+* ObjectId = Schema.Types.ObjectId
+* **populate** 它的作用是在from 中动态的注入关联模型的name 字段
+> Comment
+      .find({movie: id})
+      .populate('from', 'name')
+      .populate('reply.from reply.to', 'name')
 
+### Bootstrap
+* .panel.panel-default | .panel-heading > .panel-title | .panel-body
 
+* Media list
+With a bit of extra markup, you can use media inside list (useful for comment threads or articles lists).
 
-
-
+```
+<ul class="media-list">
+  <li class="media">
+    <div class="media-left">
+      <a href="#">
+        <img class="media-object" src="..." alt="...">
+      </a>
+    </div>
+    <div class="media-body">
+      <h4 class="media-heading">Media heading</h4>
+      ...
+    </div>
+  </li>
+</ul>
+```
+### POST Tech
+* `input(type="hidden", name="comment[movie]", value="#{movie._id}")` 隐藏域实际上是为了用value给name中的comment对象.xx赋值， 当然也可以在赋值前在jade中做if else
 
 
 

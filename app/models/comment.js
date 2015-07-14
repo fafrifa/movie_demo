@@ -1,14 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var MovieSchema = new Schema({
-	director:String,
-	title:String,
-	language:String,
-	country:String,
-	summary:String,
-	flash:String,
-	poster:String,
-	year:Number,
+// Mongoose ref : ObjectId
+var ObjectId = Schema.Types.ObjectId;
+var CommentSchema = new Schema({
+	movie:{type:ObjectId,ref:'Movie'},
+	from:{type:ObjectId,ref:'User'},
+	to:{type:ObjectId,ref:'User'},
+	content:String,
 	meta:{
 		createAt:{
 			type:Date,
@@ -24,7 +22,7 @@ var MovieSchema = new Schema({
 });
 
 // Middleware!
-MovieSchema.pre('save',function(next){
+CommentSchema.pre('save',function(next){
 	if(this.isNew){
 		this.meta.createAt = this.meta.updateAt = Date.now();
 	} else{
@@ -36,7 +34,7 @@ MovieSchema.pre('save',function(next){
 
 });
 // statics 
-MovieSchema.statics = {
+CommentSchema.statics = {
 	fetch: function(cb){
 		return this.find({}).sort('meta.updateAt').exec(cb);
 	},
@@ -47,5 +45,6 @@ MovieSchema.statics = {
 
 };
 
-module.exports = mongoose.model('Movie',MovieSchema);
+module.exports = mongoose.model('Comment',CommentSchema);
+
 

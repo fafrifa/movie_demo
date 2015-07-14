@@ -1,4 +1,5 @@
 var Movie = require('../models/movie');
+var Comment = require('../models/comment.js');
 var _=require('underscore');
 
 
@@ -103,12 +104,22 @@ exports.detail = function(req,res){
 			if(err){
 				console.log(err);
 			}
-			var movieTitle ='Movie '+ movie.title || '';
-			res.render('detail',{
-				title:movieTitle,
-				movie:movie
+			console.log('1111     '+movie.title);
+			// var movieTitle ='Movie '+ movie.title || '';
+			// Comments
+			Comment.find({movie:id})
+				.populate('from','name')
+				.exec(function(err,comments){
+					console.log('2222   '+comments);
+					res.render('detail',{
+						title:'Movie Detail',
+						movie:movie,
+						comments:comments
+					});
 
-			});
+				});
+
+
 
 		});
 

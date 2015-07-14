@@ -7,6 +7,7 @@ var _=require('underscore');
 var IndexController = require('../controllers/index_controller.js');
 var MovieController = require('../controllers/movie_controller.js');
 var UserController = require('../controllers/user_controller.js');
+var CommentController = require('../controllers/comment_controller.js');
 
 
 module.exports = function(app){
@@ -41,6 +42,8 @@ module.exports = function(app){
 	app.get('/logout',UserController.logout);
 	app.get('/signin',UserController.showSignin);
 	app.get('/signup',UserController.showSignup);
+	// Comments
+	app.post('/admin/comment',UserController.signinRequired,CommentController.save);
 
 };
 
