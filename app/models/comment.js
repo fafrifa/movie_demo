@@ -7,6 +7,11 @@ var CommentSchema = new Schema({
 	from:{type:ObjectId,ref:'User'},
 	to:{type:ObjectId,ref:'User'},
 	content:String,
+	reply:[{
+		from:{type:ObjectId,ref:'User'},
+		to:{type:ObjectId,ref:'User'},
+		content:String
+	}],
 	meta:{
 		createAt:{
 			type:Date,

@@ -1,5 +1,5 @@
 var Movie = require('../models/movie');
-var Comment = require('../models/comment.js');
+var Comment_cl = require('../models/comment.js');
 var _=require('underscore');
 
 
@@ -107,7 +107,7 @@ exports.detail = function(req,res){
 			console.log('1111     '+movie.title);
 			// var movieTitle ='Movie '+ movie.title || '';
 			// Comments
-			Comment.find({movie:id})
+			Comment_cl.find({movie:id})
 				.populate('from','name')
 				.exec(function(err,comments){
 					console.log('2222   '+comments);
