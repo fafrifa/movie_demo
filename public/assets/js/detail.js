@@ -4,17 +4,30 @@ $(function(){
 		var toId = target.data('tid');
 		var commentId = target.data('cid');
 		// add hidden input to Post form
-		$('<input>').attr({
-			type:'hidden',
-			name:'comment[tid]',
-			value:toId
-		}).appendTo('#commentForm');
+		
+		if($('#toID').length>0){
+			$('#toID').val(toId);
 
-		$('<input>').attr({
-			type:'hidden',
-			name:'comment[cid]',
-			value:commentId
-		}).appendTo('#commentForm');
+		}else{
+
+			$('<input>').attr({
+				type:'hidden',
+				name:'comment[tid]',
+				id:'toID',
+				value:toId
+			}).appendTo('#commentForm');
+		}
+		if($('#commentID').length>0){
+			$('#commentID').val(commentId);
+		}else{
+
+			$('<input>').attr({
+				type:'hidden',
+				name:'comment[cid]',
+				id:'commentID',
+				value:commentId
+			}).appendTo('#commentForm');
+		}
 	});
 
 })
