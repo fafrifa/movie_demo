@@ -27,6 +27,14 @@ block content
                   .media-body
                     h4.media-heading #{item.from.name}
                     p #{item.content}
+                    if item.reply && item.reply.length>0
+                      each reply in item.reply
+                        .media
+                          .media-left
+                            img.media-object(src="/assets/images/001.png",style="width:48px;height:48px")
+                          .media-body
+                            h4.media-heading #{reply.from.name}
+                            p #{reply.content}
                   hr
             #comments
               form#commentForm(method="POST",action="/admin/comment")

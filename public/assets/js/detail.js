@@ -8,13 +8,13 @@ $(function(){
 			type:'hidden',
 			name:'comment[tid]',
 			value:toId
-		}).appendTo('commentForm');
+		}).appendTo('#commentForm');
 
 		$('<input>').attr({
 			type:'hidden',
 			name:'comment[cid]',
 			value:commentId
-		}).appendTo('commentForm');
+		}).appendTo('#commentForm');
 	});
 
 })

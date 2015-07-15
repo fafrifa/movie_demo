@@ -104,13 +104,16 @@ exports.detail = function(req,res){
 			if(err){
 				console.log(err);
 			}
-			console.log('1111     '+movie.title);
+			// console.log('1111     '+movie.title);
 			// var movieTitle ='Movie '+ movie.title || '';
 			// Comments
+			
 			Comment_cl.find({movie:id})
 				.populate('from','name')
+				.populate('reply.from reply.to','name')
 				.exec(function(err,comments){
-					console.log('2222   '+comments);
+					
+					console.log(66666+JSON.stringify(comments));
 					res.render('detail',{
 						title:'Movie Detail',
 						movie:movie,
