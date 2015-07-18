@@ -1,7 +1,7 @@
 var Movie = require('../models/movie');
 var Comment_cl = require('../models/comment.js');
 var _=require('underscore');
-
+var Category = require('../models/category.js');
 
 exports.list = function(req,res){
 		Movie.fetch(function(err,movies){
@@ -19,22 +19,17 @@ exports.list = function(req,res){
 	};
 
 exports.new = function(req,res){
-		
+		Category.find({})
+		.exec(function(err,categories){
 
-		res.render('admin',{
-			title:'movies 后台录入',
-			movie:{
-			// 	// director:'hihi',
-			// 	// title:'hoho',
-			// 	// language:'EN',
-			// 	// country:'CN',
-			// 	// summary:'catcat',
-			// 	// flash:'http://player.youku.com/player.php/sid/XMTI2NjA4MzU1Ng==/v.swf',
-			// 	// poster:'http://img4.duitang.com/uploads/item/201207/08/20120708234648_dwQuG.thumb.600_0.jpeg',
-			// 	// year:2010
-				
-			}
+			res.render('admin',{
+				title:'movies 后台录入',
+				movie:{},
+				categories:categories
+			});
+
 		});
+
 
 	};
 exports.adminList = function(req,res){
@@ -75,21 +70,11 @@ exports.saveNew = function(req,res){
 			});
 
 		} else {
-			_movie = new Movie({
-				director:movieObj.director,
-				title:movieObj.title,
-				language:movieObj.language,
-				country:movieObj.country,
-				summary:movieObj.summary,
-				flash:movieObj.flash,
-				poster:movieObj.poster,
-				year:movieObj.year
-				
-
-			});
+			_movie = new Movie(movieObj);
 			_movie.save(function(err,movie){
 				if(err){
-					console.log(err);
+					console.log('1111111');
+					console.log('2222'+err);
 				}
 				res.redirect('/movie/'+movie._id);
 			});

@@ -3,9 +3,19 @@ block content
   .container
     .row
       form.form-horizontal(method="post",action="/admin/movie/new")
-        //- hiden input???
+        //- hiden input??? pass the value
         if movie._id
-        input(type="hidden", name="movie[_id]", value=movie._id)
+          input(type="hidden", name="movie[_id]", value=movie._id)
+        .form-group
+          label.col-sm-2.control-label(for="categoryInput") 电影分类
+          div.col-sm-10
+            input#title.form-control(type="text", name="movie[categoryName]", value=movie.categoryName)
+        .form-group
+          label.col-sm-2.control-label 选择分类
+          each cat in categories
+            label.radio-inline
+              input(type="radio",name="movie[category]",value=cat._id)
+              | #{cat.name}
         .form-group
           label.col-sm-2.control-label(for="title") 电影名字
           div.col-sm-10

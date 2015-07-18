@@ -8,6 +8,7 @@ var IndexController = require('../controllers/index_controller.js');
 var MovieController = require('../controllers/movie_controller.js');
 var UserController = require('../controllers/user_controller.js');
 var CommentController = require('../controllers/comment_controller.js');
+var CategoryController = require('../controllers/category_controller.js');
 
 
 
@@ -45,6 +46,12 @@ module.exports = function(app){
 	app.get('/signup',UserController.showSignup);
 	// Comments
 	app.post('/admin/comment',UserController.signinRequired,CommentController.save);
+
+	// Category
+	app.get('/admin/category/new',UserController.signinRequired, UserController.adminRequired,CategoryController.new);
+    app.post('/admin/category',UserController.signinRequired, UserController.adminRequired,CategoryController.saveNew)
+	app.get('/admin/category/list',UserController.signinRequired, UserController.adminRequired,CategoryController.list);
+
 
 };
 
