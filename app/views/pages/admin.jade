@@ -2,7 +2,7 @@ extends ../layout
 block content
   .container
     .row
-      form.form-horizontal(method="post",action="/admin/movie/new")
+      form.form-horizontal(method="post",action="/admin/movie/new",enctype="multipart/form-data")
         //- hiden input??? pass the value
         .form-group
           label.col-sm-2.control-label(for="douban") 豆瓣同步
@@ -18,7 +18,7 @@ block content
           label.col-sm-2.control-label 选择分类
           each cat in categories
             label.radio-inline
-              if movie._id
+              if movie.category
                 input(type="radio",name="movie[category]",value=cat._id,checked=cat._id.toString()==movie.category.toString())
                 | #{cat.name}
               else
@@ -48,6 +48,10 @@ block content
           label.col-sm-2.control-label(for="poster") 封面
           div.col-sm-10
             input#poster.form-control(type="text", name="movie[poster]", value=movie.poster)
+        .form-group
+          label.col-sm-2.control-label(for="uploadPoster") 封面
+          div.col-sm-10
+            input#uploadPoster(type="file", name="uploadPoster")
         .form-group
           label.col-sm-2.control-label(for="flash") 视频地址
           div.col-sm-10

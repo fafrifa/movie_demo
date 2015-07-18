@@ -2,6 +2,8 @@
 var Movie = require('../models/movie');
 var User = require('../models/user');
 var _=require('underscore');
+var multipart = require('connect-multiparty');
+var multiMid = multipart();
 
 // Controllers
 var IndexController = require('../controllers/index_controller.js');
@@ -33,7 +35,7 @@ module.exports = function(app){
 	app.get('/admin/movie/list',UserController.signinRequired, UserController.adminRequired,MovieController.list);
 	app.get('/admin/movie',UserController.signinRequired, UserController.adminRequired,MovieController.new);
 	app.get('/admin/movie/update/:id',UserController.signinRequired, UserController.adminRequired,MovieController.update);
-	app.post('/admin/movie/new',UserController.signinRequired, UserController.adminRequired,MovieController.saveNew)
+	app.post('/admin/movie/new',multiMid,UserController.signinRequired, UserController.adminRequired,MovieController.savePoster,MovieController.saveNew)
 	app.get('/movie/:id',MovieController.detail);
 	app.delete('/admin/movie/list',UserController.signinRequired, UserController.adminRequired,MovieController.del);
 
@@ -51,7 +53,8 @@ module.exports = function(app){
 	app.get('/admin/category/new',UserController.signinRequired, UserController.adminRequired,CategoryController.new);
     app.post('/admin/category',UserController.signinRequired, UserController.adminRequired,CategoryController.saveNew)
 	app.get('/admin/category/list',UserController.signinRequired, UserController.adminRequired,CategoryController.list);
-
+	// pagination
+	app.get('/results',IndexController.search); 
 
 };
 

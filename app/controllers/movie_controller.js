@@ -2,6 +2,37 @@ var Movie = require('../models/movie');
 var Comment_cl = require('../models/comment.js');
 var _=require('underscore');
 var Category = require('../models/category.js');
+var fs = require('fs');
+var path = require('path');
+
+// savePoster Midware
+exports.savePoster = function(req,res,next){
+	var posterData = req.files.uploadPoster;
+	console.log('777777'+JSON.stringify(posterData));
+	var filePath = posterData.path;
+	var originalFilename = posterData.originalFilename;
+	if(originalFilename){
+		fs.readFile(filePath,function(err,data){
+			var timestamp = Date.now();
+			var type = posterData.type.split('/')[1];
+			var poster = timestamp+'.'+type;
+			var newPath = path.join(__dirname,'../../','/public/upload/'+poster);
+
+			fs.writeFile(newPath,data,function(err){
+				req.poster = poster;
+				next();
+			});
+
+		});
+	}
+	else{
+		next();
+	}
+
+
+};
+
+
 
 exports.list = function(req,res){
 		Movie.fetch(function(err,movies){
@@ -59,6 +90,10 @@ exports.saveNew = function(req,res){
 		var movieObj = req.body.movie;
 		var catId_updated = movieObj.category;
 		var _movie;
+		if(req.poster){
+			movieObj.poster = req.poster;
+		}
+
 		if(id){
 			Movie.findById(id,function(err,movie){
 				if(err){
@@ -103,22 +138,41 @@ exports.saveNew = function(req,res){
 
 		} else {
 			_movie = new Movie(movieObj);
+			var catName = movieObj.categoryName;
+			var catId = movieObj.category;
 			_movie.save(function(err,movie){
 				if(err){
 					console.log('2222'+err);
 				}
-				var catId = movie.category;
-				Category.findById(catId,function(err,category){
-					category.movies.push(movie._id);
-					category.save(function(err,category){
-						if(err){
-							console.log(err);
-						}
-						res.redirect('/movie/'+movie._id);
+				if(catId){
+
+					Category.findById(catId,function(err,category){
+						category.movies.push(movie._id);
+						category.save(function(err,category){
+							if(err){
+								console.log(err);
+							}
+							res.redirect('/movie/'+movie._id);
+
+						});
 
 					});
+				} else if(catName){
+					var cat_new = new Category({
+						name:catName,
+						movies:[movie._id]
+					});
+					cat_new.save(function(err,category){
+						movie.category = category._id;
+						movie.save(function(err,movie){
+							if(err){
+								console.log(err);
+							}
+							res.redirect('/movie/'+movie._id);
+						});
+					});
 
-				});
+				}
 
 
 

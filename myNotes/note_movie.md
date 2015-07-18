@@ -143,10 +143,14 @@ array.indexOf(Element), if(index>-1){splice}
 array.splice(index,length,[insert Elements])
 > 先删再添加，index指的是从哪开始
 
+array.slice(index,length)
+> 返回一个子数组 ， 包含 头 不包含 尾
+
 ### Ex API
 * https://api.douban.com/v2/movie/subject/1393859
 
-
+### enctype="multipart/form-data"
+* 可以用connect-multiparty 来解析multi ，但是会有tmp file ，而且不会自动的清理。最好直接用multiparty API ，或者multer来做
 
 
 
