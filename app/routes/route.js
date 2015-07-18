@@ -32,7 +32,7 @@ module.exports = function(app){
 	// app.get('/list',MovieController.list);
 	app.get('/admin/movie/list',UserController.signinRequired, UserController.adminRequired,MovieController.list);
 	app.get('/admin/movie',UserController.signinRequired, UserController.adminRequired,MovieController.new);
-	app.get('/admin/movie/update/:id',UserController.signinRequired, UserController.adminRequired,MovieController.detail);
+	app.get('/admin/movie/update/:id',UserController.signinRequired, UserController.adminRequired,MovieController.update);
 	app.post('/admin/movie/new',UserController.signinRequired, UserController.adminRequired,MovieController.saveNew)
 	app.get('/movie/:id',MovieController.detail);
 	app.delete('/admin/movie/list',UserController.signinRequired, UserController.adminRequired,MovieController.del);

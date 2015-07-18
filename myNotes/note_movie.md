@@ -122,15 +122,29 @@ With a bit of extra markup, you can use media inside list (useful for comment th
 db.movies.find()
 db.movies.remove()
 
+db.movies.update({FIND},{UPDATE},{OPTIONS})
+> 一定要注意update的时候要写全！别只写一个
+db.collection.update(  { _id:...} , { $set: { some_key.param2 : new_info  } } 
+
+> 想要局部的更新需要： {$set:{someKey:newValue}}
+
+
 ### Category
 * 首先是建立Cat的Schema和Model ， 注意Movie模型中的与Cat的双向引用。
 * 在index展示上需要通过遍历 cat ， 然后再遍历其中的Movie数组得到
-* 
+* populate 时，path:中是model里面定义了type是ObjectId的key，也就是movies[],而不是category！！！
+* 用到了poputlate就一定是Type:ObjectId了，有ref关联其他的model
 
+### Array 
+array.push(Element)
 
+array.indexOf(Element), if(index>-1){splice}
+> 要判断是否有匹配到
+array.splice(index,length,[insert Elements])
+> 先删再添加，index指的是从哪开始
 
-
-
+### Ex API
+* https://api.douban.com/v2/movie/subject/1393859
 
 
 

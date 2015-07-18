@@ -32,17 +32,21 @@ exports.new = function(req,res){
 
 
 	};
-exports.adminList = function(req,res){
+exports.update = function(req,res){
 		var id = req.params.id;
-		console.log(id);
+		// console.log(id);
 		if(id){
 			Movie.findById(id,function(err,movie){
-				if(err){
-					console.log(err);
-				}
-				res.render('admin',{
-					title:'Moive 后台',
-					movie:movie
+				Category.find({},function(err,categories){
+
+					if(err){
+						console.log(err);
+					}
+					res.render('admin',{
+						title:'Moive 后台',
+						movie:movie,
+						categories:categories
+					});
 				});
 			});
 		}
@@ -53,19 +57,47 @@ exports.saveNew = function(req,res){
 		//bodyParser extended = true  -> is the key !!!
 		var id = req.body.movie._id;
 		var movieObj = req.body.movie;
-		
+		var catId_updated = movieObj.category;
 		var _movie;
 		if(id){
 			Movie.findById(id,function(err,movie){
 				if(err){
 					console.log(err);
 				}
+				//******
+				// remove old cat 
+				var catId_old = movie.category;
+				Category.findById(catId_old,function(err,category){
+					var index = category.movies.indexOf(id);
+					if(index>-1){
+
+						category.movies.splice(index,1);
+						category.save(function(err,category){
+							console.log(err);
+						});
+					}
+				});
+				//******
+
+
 				_movie = _.extend(movie,movieObj);
 				_movie.save(function(err,movie){
 					if(err){
 						console.log(err);
 					}
-					res.redirect('/movie/'+movie._id);
+					//var catId = movie.category;
+					Category.findById(catId_updated,function(err,category){
+						// then add to the new
+						category.movies.push(movie._id);
+						category.save(function(err,category){
+							if(err){
+								console.log(err);
+							}
+							res.redirect('/movie/'+movie._id);
+							
+						});
+
+					});
 				});
 			});
 
@@ -73,10 +105,24 @@ exports.saveNew = function(req,res){
 			_movie = new Movie(movieObj);
 			_movie.save(function(err,movie){
 				if(err){
-					console.log('1111111');
 					console.log('2222'+err);
 				}
-				res.redirect('/movie/'+movie._id);
+				var catId = movie.category;
+				Category.findById(catId,function(err,category){
+					category.movies.push(movie._id);
+					category.save(function(err,category){
+						if(err){
+							console.log(err);
+						}
+						res.redirect('/movie/'+movie._id);
+
+					});
+
+				});
+
+
+
+
 			});
 
 
