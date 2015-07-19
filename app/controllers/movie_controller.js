@@ -185,6 +185,13 @@ exports.saveNew = function(req,res){
 	};
 exports.detail = function(req,res){
 		var id = req.params.id;
+		//pv
+		Movie.update({_id:id},{$inc:{pv:1}},function(err){
+			if(err){
+				console.log(err);
+			}
+		});
+
 		Movie.findById(id,function(err,movie){
 			if(err){
 				console.log(err);
