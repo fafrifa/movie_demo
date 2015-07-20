@@ -55,15 +55,15 @@ module.exports = function(grunt){
 			}
 		},
 		//--- uglify
-		// uglify:{
-		// 	development:{
-		// 		files:{
-		// 			'public/build/admin.min.js':'public/assets/js/main.js',
-		// 			// detail.js
+		uglify:{
+			development:{
+				files:{
+					'public/build/admin.min.js':'public/assets/js/main.js',
+					// detail.js
 
-		// 		}
-		// 	}
-		// },
+				}
+			}
+		},
 		//--- nodemon
 		nodemon:{
 			dev:{
