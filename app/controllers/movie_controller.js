@@ -8,7 +8,7 @@ var path = require('path');
 // savePoster Midware
 exports.savePoster = function(req,res,next){
 	var posterData = req.files.uploadPoster;
-	console.log('777777'+JSON.stringify(posterData));
+	// console.log('777777'+JSON.stringify(posterData));
 	var filePath = posterData.path;
 	var originalFilename = posterData.originalFilename;
 	if(originalFilename){

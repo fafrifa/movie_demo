@@ -45,6 +45,7 @@ exports.signin = function(req,res){
 					console.log(err);
 					console.log('002');
 				}
+				// function(err,isMatch)(err) || function(err,isMatch)(null,isMatch)
 				if(isMatch){
 					req.session.user = user;
 					return res.redirect('/');
@@ -63,6 +64,7 @@ exports.signin = function(req,res){
 	  //   	} else{
 	  //   		console.log('Wrong Password!');
 	  //   	}
+	  
 		});
 
 	};
